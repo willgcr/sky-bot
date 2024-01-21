@@ -1,0 +1,26 @@
+{
+	"name": "sky-bot",
+	"version": "1.0.0",
+	"description": "A StarLab bot to get astrological transits at a given time and location.",
+	"main": "App.js",
+	"scripts": {
+		"test": "jest"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/StarLabBR/sky-bot.git"
+	},
+	"author": "https://willgcr.me",
+	"license": "SEE LICENSE IN LICENSE.md",
+	"dependencies": {
+		"moment": "^2.30.1",
+		"moment-timezone": "^0.5.44",
+		"tz-lookup": "^6.1.25"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.23.7",
+		"@babel/preset-env": "^7.23.8",
+		"babel-jest": "^29.7.0",
+		"jest": "^29.7.0"
+	}
+}
