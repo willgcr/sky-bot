@@ -1,8 +1,8 @@
 import moment from 'moment-timezone';
 import tzlookup from 'tz-lookup';
-import { hourTimeToDecimal } from './utilities/math';
-import { getJulianDate, getLocalSiderealTime } from './utilities/astronomy';
-import { validateYear, validateMonth, validateDate, validateHour, validateMinute, validateLatitude, validateLongitude } from './utilities/validators';
+import { hourTimeToDecimal } from '../utilities/math';
+import { getJulianDate, getLocalSiderealTime } from '../utilities/astronomy';
+import { validateYear, validateMonth, validateDate, validateHour, validateMinute, validateLatitude, validateLongitude } from '../utilities/validators';
 
 //////////
 // Origin

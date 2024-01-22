@@ -1,4 +1,4 @@
-import ChartPosition from '../src/ChartPosition';
+import ChartPosition from '../src/core/ChartPosition';
 
 describe ('ChartPosition', () => {
 	describe ('getters', () => {

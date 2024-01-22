@@ -1,6 +1,6 @@
 import { getAscendant, getMidheavenSun } from "../src/utilities/astronomy";
-import Origin from '../src/Origin';
-import Horoscope from '../src/Horoscope';
+import Origin from '../src/core/Origin';
+import Horoscope from '../src/core/Horoscope';
 
 describe ("getAscendant", () => {
 	it ("returns correct value 0 ", () => {

@@ -1,6 +1,6 @@
 import { modulo, getModuloDifference, isDegreeWithinCircleArc } from "./math";
-import { ASPECTS } from "../constants";
-import Aspect from "../Aspect";
+import { ASPECTS } from "../core/constants";
+import Aspect from "../core/Aspect";
 
 export const isAspect = (point1, point2, angle, orb) => {
 	const computed = modulo (point2 - point1, 360);

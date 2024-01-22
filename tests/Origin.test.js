@@ -1,32 +1,32 @@
-import Origin from '../src/Origin';
+import Origin from '../src/core/Origin';
 
 describe ('Constructor validations / errors', () => {
 	test ('invalid year', () => {
-		expect (() => new Origin ({year: 0})).toThrowError ("The year: \"0\" - must be an integer and > 0 (C.E.)");
+		expect (() => new Origin ({year: 0})).toThrowError ("The year: 0 - must be an integer > 0 & < 3000 (C.E.)");
 	});
 
 	test ('invalid month', () => {
-		expect (() => new Origin ({year: 1, month: 12})).toThrowError ("The month: \"12\" - must be an integer and between 0 - 11. (0 = January, 11 = December)");
+		expect (() => new Origin ({year: 1, month: 12})).toThrowError ("The month: 12 - must be an integer and between 0 - 11. (0 = January, 11 = December)");
 	});
 
 	test ('invalid date', () => {
-		expect (() => new Origin ({year: 1, month: 1, date: 32})).toThrowError ("The date: \"32 must be between 1 - 31");
+		expect (() => new Origin ({year: 1, month: 1, date: 32})).toThrowError ("The date: 32 must be between 1 - 31");
 	});
 
 	test ('invalid hour', () => {
-		expect (() => new Origin ({year: 1, month: 1, date: 31, hour: 24})).toThrowError ("The hour: \"24\" - must be an integer and between 0 - 23. (0 = midnight 00:00, 23 = 11pm (23:00))");
+		expect (() => new Origin ({year: 1, month: 1, date: 31, hour: 24})).toThrowError ("The hour: 24 - must be an integer and between 0 - 23. (0 = midnight 00:00, 23 = 11pm (23:00))");
 	});
 
 	test ('invalid minute', () => {
-		expect (() => new Origin ({year: 1, month: 1, date: 31, hour: 23, minute: 60})).toThrowError ("The minute: \"60\" - must be an integer and between 0 - 59");
+		expect (() => new Origin ({year: 1, month: 1, date: 31, hour: 23, minute: 60})).toThrowError ("The minute: 60 - must be an integer and between 0 - 59");
 	});
 
 	test ('invalid latitude', () => {
-		expect (() => new Origin ({year: 1, month: 1, date: 31, hour: 23, minute: 59, latitude: -90.01})).toThrowError ("The latitude: \"-90.01\" - must be an float and between -90.00 to 90.00");
+		expect (() => new Origin ({year: 1, month: 1, date: 31, hour: 23, minute: 59, latitude: -90.01})).toThrowError ("The latitude: -90.01 - must be an float and between -90.00 to 90.00");
 	});
 
 	test ('invalid longitude', () => {
-		expect (() => new Origin ({year: 1, month: 1, date: 31, hour: 23, minute: 59, latitude: -90, longitude: -181.01})).toThrowError ("The longitude: \"-181.01\" - must be an float and between -180.00 to 180.00");
+		expect (() => new Origin ({year: 1, month: 1, date: 31, hour: 23, minute: 59, latitude: -90, longitude: -181.01})).toThrowError ("The longitude: -181.01 - must be an float and between -180.00 to 180.00");
 	});
 });
 

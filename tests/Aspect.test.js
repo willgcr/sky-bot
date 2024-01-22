@@ -1,4 +1,4 @@
-import Aspect from '../src/Aspect';
+import Aspect from '../src/core/Aspect';
 
 describe ('Aspect', () => {
 	describe ('constructor', () => {

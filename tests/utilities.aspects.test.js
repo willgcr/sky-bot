@@ -1,5 +1,5 @@
-import Origin from '../src/Origin';
-import Horoscope from '../src/Horoscope';
+import Origin from '../src/core/Origin';
+import Horoscope from '../src/core/Horoscope';
 import { isAspect, getAspectData, createAspects, calculateOrb } from '../src/utilities/aspects';
 
 describe ('isAspect', () => {

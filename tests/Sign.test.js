@@ -1,9 +1,9 @@
-import Sign from '../src/Sign';
+import Sign from '../src/core/Sign';
 
 describe ('Sign', () => {
 	describe ('constructor', () => {
 		test ('invalid zodiac', () => {
-			expect (() => new Sign ({key: 'pisces', zodiac: "TEST"})).toThrowError ("The \"test\" zodiac is not included. Please choose from the following list: sidereal, tropical.");
+			expect (() => new Sign ({key: 'pisces', zodiac: "TEST"})).toThrowError ("The test zodiac is not included. Please choose from the following list: sidereal, tropical.");
 		});
 
 		test ('Get label', () => {

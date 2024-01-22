@@ -1,12 +1,12 @@
 import moment from 'moment-timezone';
-import { modulo } from './utilities/math';
-import { SIGNS } from './constants';
-import { LANGUAGE } from './utilities/language';
-import { validateZodiac } from './utilities/validators';
+import { modulo } from '../utilities/math';
+import { SIGNS } from '../core/constants';
+import { LANGUAGE } from '../utilities/language';
+import { validateZodiac } from '../utilities/validators';
 
 class Sign {
-	constructor({key='', zodiac="tropical", language='en'}={}) {
-		const signData = SIGNS.find(sign => sign.key === key);
+	constructor ({key = '', zodiac = "tropical", language = 'en'} = {}) {
+		const signData = SIGNS.find (sign => sign.key === key);
 
 		this.key = key;
 		this.zodiac = validateZodiac (zodiac.toLowerCase (), language);
@@ -20,15 +20,15 @@ class Sign {
 	}
 
 	static Astronomical (language) {
-		return SIGNS.map (sign => new Sign({key: sign.key, zodiac: 'astronomical', language}));
+		return SIGNS.map (sign => new Sign ({key: sign.key, zodiac: 'astronomical', language: language}));
 	}
 
 	static Sidereal (language) {
-		return SIGNS.filter (sign => sign.key !== 'ophiuchus').map (sign => new Sign({key: sign.key, zodiac: 'sidereal', language})); // no Ophiucus
+		return SIGNS.filter (sign => sign.key !== 'ophiuchus').map (sign => new Sign ({key: sign.key, zodiac: 'sidereal', language: language})); // no Ophiucus
 	}
 
-	static Tropical(language) {
-		return SIGNS.filter(sign => sign.key !== 'ophiuchus').map (sign => new Sign({key: sign.key, zodiac: 'tropical', language})); // no Ophiucus
+	static Tropical (language) {
+		return SIGNS.filter (sign => sign.key !== 'ophiuchus').map (sign => new Sign ({key: sign.key, zodiac: 'tropical', language: language})); // no Ophiucus
 	}
 
 	static OfType (zodiac, language='en') {

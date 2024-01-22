@@ -1,21 +1,21 @@
 import moment from 'moment-timezone';
-import Ephemeris from './lib/ephemeris-1.2.1.bundle';
+import Ephemeris from '../lib/ephemeris-1.2.1.bundle';
 import Sign from './Sign';
 import ChartPosition from './ChartPosition';
 import House from './House';
 
-import { LANGUAGE } from './utilities/language';
+import { LANGUAGE } from '../utilities/language';
 import { ASPECTS, BODIES, ANGLES, POINTS } from './constants';
 
-import { getMidheavenSun, getAscendant } from './utilities/astronomy';
-import { createAspects } from './utilities/aspects';
-import { validateHouseSystem, validateZodiac, validateAspectTypes, validateAspectPoints, validateCustomOrbs } from './utilities/validators';
+import { getMidheavenSun, getAscendant } from '../utilities/astronomy';
+import { createAspects } from '../utilities/aspects';
+import { validateHouseSystem, validateZodiac, validateAspectTypes, validateAspectPoints, validateCustomOrbs } from '../utilities/validators';
 
 import { 
 	calculateEqualHouseCusps, calculateCampanusHouseCusps, calculateKochHouseCusps, calculatePlacidianHouseCusps, 
 	calculateRegiomontanusHouseCusps, calculateTopocentricHouseCusps, calculateWholeSignHouseCusps, getZodiacSign,
 	applyZodiacOffsetCounter, zodiacPositionToHorizon, getHouseFromDD, constructHouses
-} from './utilities/astrology';
+} from '../utilities/astrology';
 
 //////////
 // Horoscope
@@ -274,7 +274,7 @@ export class Horoscope {
 
 	createSunSign (zodiac, language) {
 		// Source: https://horoscopes.lovetoknow.com/about-astrology/new-horoscope-dates
-		const sign = Sign.OfType(zodiac, language).find((s) => {
+		const sign = Sign.OfType (zodiac, language).find ((s) => {
 			if (!s.StartDate) return null;
 			const originYear = this.origin.year;
 			const startDate = moment (s.StartDate).add (originYear, 'year');
@@ -300,7 +300,7 @@ export class Horoscope {
 		// Ascendant is a # in degrees longitude along the zodiac
 		// Ascendant is always 0 on the ecliptic
 		// A sign's ecliptic position is therefore the ascendant's degrees minus the sign's starting zodiac position (with offset applied for sidereal).
-		return Sign.OfType(this._zodiac, this._language).map ((sign) => {
+		return Sign.OfType (this._zodiac, this._language).map ((sign) => {
 			const zodiacStart = sign.ZodiacStart;
 			const horizonDegrees = zodiacPositionToHorizon (
 				this.Ascendant.ChartPosition.Ecliptic.DecimalDegrees,
@@ -457,15 +457,15 @@ export class Horoscope {
 			let eclipticDegrees;
 			switch (key) {
 				case 'northnode':
-					eclipticDegrees = ephemerisResults.find((body) => body.key === 'moon')
+					eclipticDegrees = ephemerisResults.find ((body) => body.key === 'moon')
 						.orbit.meanAscendingNode.apparentLongitude;
 					break;
 				case 'southnode':
-					eclipticDegrees = ephemerisResults.find((body) => body.key === 'moon')
+					eclipticDegrees = ephemerisResults.find ((body) => body.key === 'moon')
 						.orbit.meanDescendingNode.apparentLongitude;
 					break;
 				case 'lilith':
-					eclipticDegrees = ephemerisResults.find((body) => body.key === 'moon')
+					eclipticDegrees = ephemerisResults.find ((body) => body.key === 'moon')
 						.orbit.meanApogee.apparentLongitude;
 					break;
 				default:

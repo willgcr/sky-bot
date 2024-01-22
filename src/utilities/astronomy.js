@@ -1,11 +1,9 @@
-// 'use strict';
-
 import moment from 'moment';
 import { degreesToRadians, radiansToDegrees, modulo, arccot, sinFromDegrees, cosFromDegrees, tanFromDegrees, decimalDegreesToDMS } from './math';
 
-export const getObliquityEcliptic = () => {
+// export const getObliquityEcliptic = () => {
 
-};
+// };
 
 export const getJulianDate = ({
 	year = 0, month = 0, date = 0, ut = 0,
@@ -46,11 +44,11 @@ export const getLocalSiderealTime = ({ jd = 0, longitude = 0 } = {}) => {
 	const degreesRotationInSiderealDay = 360.98564736629;
 	const lst = 280.46061837
 		+ (degreesRotationInSiderealDay * (julianDaysSince2000))
-		+ 0.000387933 * Math.pow(tFactor, 2)
-		- (Math.pow(tFactor, 3) / 38710000)
+		+ 0.000387933 * Math.pow (tFactor, 2)
+		- (Math.pow (tFactor, 3) / 38710000)
 		+ longitude;
 
-	const modLst = modulo(parseFloat(lst), 360);
+	const modLst = modulo (parseFloat (lst), 360);
 	return modLst;
 };
 
@@ -66,9 +64,9 @@ export const getMidheavenSun = ({ localSiderealTime = 0.00, obliquityEcliptic = 
 	// Default obliquityEcliptic value from http://www.neoprogrammics.com/obliquity_of_the_ecliptic/
 	// for Mean Obliquity on Sept. 22 2019 at 0000 UTC
 
-	const tanLST = tanFromDegrees(localSiderealTime);
-	const cosOE = cosFromDegrees(obliquityEcliptic);
-	let midheaven = radiansToDegrees(Math.atan(tanLST / cosOE));
+	const tanLST = tanFromDegrees (localSiderealTime);
+	const cosOE = cosFromDegrees (obliquityEcliptic);
+	let midheaven = radiansToDegrees (Math.atan (tanLST / cosOE));
 
 	// Correcting the quadrant
 	if (midheaven < 0) {
@@ -87,23 +85,23 @@ export const getMidheavenSun = ({ localSiderealTime = 0.00, obliquityEcliptic = 
 		midheaven += 180;
 	}
 
-	return modulo(midheaven, 360);
+	return modulo (midheaven, 360);
 };
 
 export const getAscendant = ({ latitude = 0.00, obliquityEcliptic = 23.4367, localSiderealTime = 0.00 } = {}) => {
-	latitude = parseFloat(latitude);
-	obliquityEcliptic = parseFloat(obliquityEcliptic);
-	localSiderealTime = parseFloat(localSiderealTime); // this should be in degrees, aka right ascension of MC
+	latitude = parseFloat (latitude);
+	obliquityEcliptic = parseFloat (obliquityEcliptic);
+	localSiderealTime = parseFloat (localSiderealTime); // this should be in degrees, aka right ascension of MC
 
-	const a = -cosFromDegrees(localSiderealTime);
-	const b = sinFromDegrees(obliquityEcliptic) * tanFromDegrees(latitude);
-	const c = cosFromDegrees(obliquityEcliptic) * sinFromDegrees(localSiderealTime);
+	const a = -cosFromDegrees (localSiderealTime);
+	const b = sinFromDegrees (obliquityEcliptic) * tanFromDegrees (latitude);
+	const c = cosFromDegrees (obliquityEcliptic) * sinFromDegrees (localSiderealTime);
 	const d = b + c;
 	const e = a / d;
-	const f = Math.atan(e);
+	const f = Math.atan (e);
 
 	// console.log(latitude, localSiderealTime, a, b, c, d, e, f)
-	let ascendant = radiansToDegrees(f);
+	let ascendant = radiansToDegrees (f);
 
 	// modulation from wikipedia
 	// https://en.wikipedia.org/wiki/Ascendant
@@ -121,15 +119,15 @@ export const getAscendant = ({ latitude = 0.00, obliquityEcliptic = 23.4367, loc
 		ascendant += 180;
 	}
 
-	return modulo(ascendant, 360);
+	return modulo (ascendant, 360);
 };
 
 //
 // * Legacy method - has issues *
 // export const getAscendant = ({latitude=0.00, obliquityEcliptic=23.4367, localSiderealTime=0.00 } = {}) => {
-//	 latitude = parseFloat(latitude)
-//	 obliquityEcliptic = parseFloat(obliquityEcliptic)
-//	 localSiderealTime = parseFloat(localSiderealTime)
+//	 latitude = parseFloat (latitude)
+//	 obliquityEcliptic = parseFloat (obliquityEcliptic)
+//	 localSiderealTime = parseFloat (localSiderealTime)
 //
 //	 // TODO - reimplement with meeus calc Astronomical Algorithms, p99
 //	 // test lat 42.37 and lst 90.808 should turn into libra 180.06... not Aries 0.06
@@ -146,11 +144,11 @@ export const getAscendant = ({ latitude = 0.00, obliquityEcliptic = 23.4367, loc
 //	 // Default obliquityEcliptic value from http://www.neoprogrammics.com/obliquity_of_the_ecliptic/
 //	 // for Mean Obliquity on Sept. 22 2019 at 0000 UTC
 //
-//	 const a = tanFromDegrees(parseFloat(latitude)) * sinFromDegrees(obliquityEcliptic)
-//	 const b = sinFromDegrees(localSiderealTime) * cosFromDegrees(obliquityEcliptic)
-//	 const c = (a + b) / cosFromDegrees(localSiderealTime)
+//	 const a = tanFromDegrees (parseFloat (latitude)) * sinFromDegrees (obliquityEcliptic)
+//	 const b = sinFromDegrees (localSiderealTime) * cosFromDegrees (obliquityEcliptic)
+//	 const c = (a + b) / cosFromDegrees (localSiderealTime)
 //
-//	 let ascendant = radiansToDegrees(arccot(-c))
+//	 let ascendant = radiansToDegrees (arccot(-c))
 //
 //	 if (ascendant < 0) {
 //		 ascendant += 180
@@ -164,5 +162,5 @@ export const getAscendant = ({ latitude = 0.00, obliquityEcliptic = 23.4367, loc
 //		 ascendant -= 180
 //	 }
 //
-//	 return modulo(ascendant, 360)
+//	 return modulo (ascendant, 360)
 // }

@@ -1,4 +1,4 @@
-import House from '../src/House';
+import House from '../src/core/House';
 
 describe ('House', () => {
 	describe ('StartPosition', () => {

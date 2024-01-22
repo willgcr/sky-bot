@@ -1,7 +1,7 @@
-import { zodiacPositionToHorizon, getZodiacSign, applyZodiacOffsetCounter } from './utilities/astrology'
-import { modulo } from './utilities/math'
-import ChartPosition from './ChartPosition'
-import { LANGUAGE } from './utilities/language'
+import { zodiacPositionToHorizon, getZodiacSign, applyZodiacOffsetCounter } from '../utilities/astrology';
+import { modulo } from '../utilities/math';
+import { LANGUAGE } from '../utilities/language';
+import ChartPosition from './ChartPosition';
 
 export default class House {
 	constructor ({ascendantDegrees=0, eclipticDegreesStart=0, eclipticDegreesEnd=0, id=0, zodiac='tropical', language='en'}={}) {

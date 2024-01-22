@@ -1,5 +1,5 @@
-import Sign from '../Sign';
-import House from '../House';
+import Sign from '../core/Sign';
+import House from '../core/House';
 
 import {
 	modulo, arccot, degreesToRadians, radiansToDegrees, tanFromDegrees, cosFromDegrees, sinFromDegrees, isDegreeWithinCircleArc,
@@ -154,7 +154,6 @@ export const calculateKochHouseCusps = ({
 	// * float obliquityEcliptic = obliquity of ecliptic in degrees
 	// returns => [1..12] (array of 12 floats marking the cusp of each house)
 	//////////
-
 	const declinationMC = Math.asin (sinFromDegrees (midheaven) * sinFromDegrees (obliquityEcliptic)); // radians
 	const ascensionalDiff = Math.asin (Math.tan (declinationMC) * tanFromDegrees (latitude)); // radians
 	const obliqueAscensionMC = degreesToRadians (rightAscensionMC) - ascensionalDiff; // radians
@@ -432,6 +431,7 @@ export const calculateEqualHouseCusps = ({ ascendant = 0.00, zodiac = 'tropical'
 		const startingDegree = ascendant;
 		return parseFloat (modulo (index ? (index * 30) + startingDegree : index + startingDegree, 360).toFixed (4));
 	});
+
 export const calculateWholeSignHouseCusps = ({ ascendant = 0.00, zodiac = 'tropical' } = {}) => {
 	// The ascendant's zodiac position is taken as the first house and each house is assigned to each of the signs in zodiacal order, with each of the twelve houses exactly coinciding with the start and end of each sign
 	//////////

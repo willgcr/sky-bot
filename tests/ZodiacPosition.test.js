@@ -1,4 +1,4 @@
-import ZodiacPosition from '../src/ZodiacPosition'
+import ZodiacPosition from '../src/core/ZodiacPosition';
 
 describe('ZodiacPosition', () => {
   describe('getters', () => {

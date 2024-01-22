@@ -1,5 +1,5 @@
-import Origin from '../src/Origin';
-import Horoscope from '../src/Horoscope';
+import Origin from '../src/core/Origin';
+import Horoscope from '../src/core/Horoscope';
 
 const defaultOrigin = new Origin({
 	year: 2019, // July 20, 2019 10:10am local time
@@ -16,7 +16,7 @@ describe ('Construction Validation & Errors', () => {
 		const origin = defaultOrigin;
 
 		test ('Passing in an invalid houseSystem string', () => {
-			expect (() => new Horoscope ({ origin, houseSystem: 'TEST' })).toThrowError (/The "TEST" house system is not included. Please choose from the following list:/);
+			expect (() => new Horoscope ({ origin, houseSystem: 'TEST' })).toThrowError (/The TEST house system is not included. Please choose from the following list:/);
 		});
 
 		test ('Passing in a valid houseSystem string', () => {
@@ -24,7 +24,7 @@ describe ('Construction Validation & Errors', () => {
 		});
 
 		test ('invalid zodiac', () => {
-			expect (() => new Horoscope ({ origin, zodiac: 'TEST' })).toThrowError ('The "test" zodiac is not included. Please choose from the following list: sidereal, tropical.');
+			expect (() => new Horoscope ({ origin, zodiac: 'TEST' })).toThrowError ('The test zodiac is not included. Please choose from the following list: sidereal, tropical.');
 		});
 	});
 
@@ -38,7 +38,7 @@ describe ('Construction Validation & Errors', () => {
 				aspectPoints: ['sun'],
 				aspectWithPoints: ['moon'],
 				customOrbs: { conjunction: '-1' },
-			})).toThrowError (/Custom orb \"conjunction\" must be > 0./);
+			})).toThrowError (/Custom orb conjunction must be > 0./);
 		});
 
 		test ('Passing in an invalid houseSystem string', () => {
@@ -48,7 +48,7 @@ describe ('Construction Validation & Errors', () => {
 				aspectPoints: ['sun'],
 				aspectWithPoints: ['moon'],
 				customOrbs: { conjunction: '13' },
-			})).toThrowError (/Custom orb \"conjunction\" must be <= 12./);
+			})).toThrowError (/Custom orb conjunction must be <= 12./);
 		});
 	});
 });

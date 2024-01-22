@@ -1,6 +1,6 @@
 import { ASPECTS } from './constants';
-import { modulo } from './utilities/math';
-import { LANGUAGE } from './utilities/language';
+import { modulo } from '../utilities/math';
+import { LANGUAGE } from '../utilities/language';
 
 /** Class representing an aspect. */
 export default class Aspect {
