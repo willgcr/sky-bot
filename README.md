@@ -8,16 +8,15 @@ This work is derived from *[CircularNatalHoroscopeJS (v1.1.0)](https://github.co
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Key Features](#key-features)
-3. [Future Work](#future-work)
-4. [How to Run SkyBot?](#how-to-run-skybot)
+- [Key Features](#key-features)
+- [Future Work](#future-work)
+- [How to Run SkyBot?](#how-to-run-skybot)
    - [Using Docker](#using-docker)
    - [Without Docker](#without-docker)
-5. [Using the API](#using-the-api)
-   - [Login Endpoint](#login-endpoint)
-   - [Transits Endpoint](#transits-endpoint)
-6. [License / Special Thanks](#license--special-thanks)
+- [Using the API](#using-the-api)
+   - [Login Endpoint](#login)
+   - [Transits Endpoint](#transits)
+- [License / Special Thanks](#license--special-thanks)
 
 Feel free to adjust the formatting or wording based on your preferences!
 
