@@ -1,6 +1,6 @@
 # SkyBot
 
-[![GitHub](https://img.shields.io/github/license/willgcr/sky-bot?style=for-the-badge)](https://github.com/willgcr/sky-bot/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/willgcr/sky-bot?style=for-the-badge)](https://github.com/willgcr/sky-bot/blob/main/LICENSE.md)
 [![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/willgcr/sky-bot?sort=semver&style=for-the-badge)](https://github.com/willgcr/sky-bot/releases)
 
 Hi there, welcome to **SkyBot** repository!
