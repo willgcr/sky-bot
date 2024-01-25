@@ -1,59 +1,207 @@
 # SkyBot
 
-Hi there!
+Hi there, welcome to **SkyBot** repository!
 
-SkyBot is a user-friendly and straightforward implementation designed for retrieving astrological transits based on specific time and location parameters. This project was built to provide astrological enthusiasts, developers, and businesses with accurate astrological data for their applications ***(for free!)***.
+**SkyBot** is a user-friendly and straightforward implementation designed for retrieving astronomical transits based on specific parameters for astrology applications. This project was built to provide astrological enthusiasts, developers, and businesses with accurate astrological data for their applications ***(yep, it is free and open-source!)***.
 
-This work is derived from [CircularNatalHoroscopeJS](https://github.com/0xStarcat/CircularNatalHoroscopeJS) library (v1.1.0) wrapped into an API that can be deployed on Docker containers. By this date (Jan 2024) I haven't made any relevant changes to the main algorithm but I decided not to make use of the original modular library to make sure that it can incorporate updates and extension in the future without relying in the origin project.
+This work is derived from *[CircularNatalHoroscopeJS (v1.1.0)](https://github.com/0xStarcat/CircularNatalHoroscopeJS)*. I just wrapped it into an API that can be deployed on Docker containers. By this date (Jan 2024) I haven't made any relevant changes to the main algorithm but I decided not to make use of the origin library as a module to make sure **SkyBot** can incorporate updates and extension in the future without relying in the origin project.
 
 ## Key Features
 
-- Astrological Transits: Access precise information about astrological transits, empowering users to explore and understand celestial events at a given time and location.
+**SkyBot** inherits all the features of the *CircularNatalHoroscopeJS v1.1.0*, but was built with containerization in mind, so these are the actual features:
 
-- Docker Container Compatibility: SkyBot is built with containerization in mind, allowing seamless deployment and scalability within Docker containers. This ensures easy integration into various environments and simplifies the management of dependencies.
+1. Allows user to switch between `tropical` and `sidereal` zodiacs when constructing calculations;
+2. Calculates the major angles (`ascendant` and `midheaven`) in relation to the point of origin;
+3. Calculates the positions for all major bodies (`sun`, `moon`, `mercury`, `venus`, `mars`, `jupiter`, `saturn`, `uranus`, `neptune`, `pluto`, `chiron`, `sirius`) in relation to the point of origin;
+4. Calculates the positions of the north/south Lunar Nodes and Lilith in relation to the point of origin;
+5. Notes whether a planet is in retrograde at the given date/time;
+6. Provides the cusps of each house in relation to the point of origin within multiple house systems (`placidus`, `koch`, `topocentric`, `regiomontanus`, `campanus`, `whole-sign`, `equal-house`);
+7. Provides the cusps of each astrological sign in relation to the point of origin;
+8. Provides a configurable list containing all the computed major and minor aspects of all bodies / points / angles;
+9. Provides a way to extend the project with other language and deliver language-specific labels and names within the results (**SkyBot** added Brazilian Portuguese);
+10. Docker Container Compatibility: **SkyBot** allows seamless deployment and scalability within Docker containers. This ensures easy integration into various environments;
+11. JWT Token Authentication: Adds an extra layer of security to the API and allows future extension into a multi-user API.
 
-- JWT Token Authentication: Prioritize security with JSON Web Token (JWT) authentication, adding an extra layer of protection to the API. Only authorized users with valid tokens can access and utilize the astrological transit data.
+## Future Work
 
-- User-Friendly Implementation: With a focus on simplicity, SkyBot offers an intuitive interface for developers to effortlessly integrate astrological data into their applications.
+- The current version uses an SQLite database in memory to store user credentials, in the future **SkyBot** can be extended to support multiple users, move the SQLite database to disk and store usage information for each user, making possible to set limits per user and quantify some metrics;
 
-- Customizable Parameters: Tailor astrological transit data to your specific needs by inputting time, location and other parameters. This flexibility ensures that users can obtain accurate information and all the relevant data needed to meet their requirements.
+- Add a minimal response option (to save bandwith);
 
-## How to use it?
+- Validate get query parameters;
 
-...
+- Implement customOrbs query parameter.
 
-### Building
+## How to run SkyBot?
 
-...
+### Using Docker
 
-### Parameters
+This project was built to run on Docker containers so everything you need to do is running the `build.sh` script. This script asks a few questions to configure the app and build the image:
 
-These are the supported parameters:
+```bash
+./build.sh <image-name>
+# image-name is optional, if not provided the script uses a default image name
+```
 
-* int year: value > 0 && < 3000
-* int month: (0 = january ~ 11 = december)
-* int date: (1 ~ 31)
-* int hours = local time hour (0...23)
-* int minute = local time minute (0...59)
-* float latitude = latitude in decimal format (-90.00 ~ 90.00)
-* float longitude = longitude in decimal format (-180.00 ~ 180.00)
-* string houseSystem: one of the following: ['placidus', 'koch', 'campanus', 'whole-sign', 'equal-house', 'regiomontanus', 'topocentric']
-* string zodiac: one of the following: ['sidereal', 'tropical']
-* array aspectPoints = an array containing all or none of the strings "bodies", "points", or "angles" to determine which starting points will be used in aspect generation
-* array aspectWithPoints = an array containing all or none of the strings "bodies", "points", or "angles" to determine ending points will be used in aspect generation
-* array aspectTypes = an array containing all or none of the following: "major", "minor", "conjunction", "opposition", "trine", "square", "sextile", "quincunx", "quintile", "septile", "semi-square", "semi-sextile"
-* object customOrbs = an object with specific keys set to override the default orbs and set your own for aspect calculation.
-* string language = the language code (en, es, pt) which will return labels and results in a specific language, if configured.
+After building, you need to deploy a container and route the ports, to make it easier you can run the `deploy.sh` script:
 
-NOTE: "bodies" = planets, "points" = lunar nodes / lilith, "angles" = ascendant / midheaven
-NOTE: You can also pass in individual bodies, points, or angles into aspectPoints or aspectWithPoints
- example: { aspectPoints: ["sun"], aspectWithPoints: ["moon"], aspectTypes: ["major", "quincunx"] }
- will only calculate sun to moon major or quincunx aspects if they exist
- All usable keys found in ./src/constant.js under BODIES, POINTS, ANGLES
+```bash
+./deploy.sh <container-name>
+# container-name is optional, if not provided the script uses a default image name
+```
 
-## License
+**NOTE:** You don't need to use the `build.sh` and `deploy.sh` scripts, they are there just to make things easier, but if you know what you're doing you can build and deploy without them.
 
-SkyBot is licensed under [GPLv3](LICENSE.md).
+### Without Docker
+
+If you don't want to run the app in a Docker container, you can run it in the host machine by following these steps:
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Configue the app:
+
+```bash
+npm run setup <username> <password> <appPort>
+```
+
+The setup script creates a `.env` file containing the encrypted password and other important app variables, like the APP_KEY (which is used to generate JSON Web Tokens). If you know what you're doing, you can edit the `.env` file manually.
+
+3. Build the app:
+
+```bash
+npm run build
+```
+
+4. After building, you can run it from the `dist` folder:
+
+```bash
+npm run dist
+```
+
+By doing so, the **SkyBot** starts running on port `8080` (you can change in the `.env` file). Now you are free to setup your production environment the way you want or just start having fun!
+
+## Using the API
+
+With **SkyBot** running you have the following API routes:
+
+### Login
+
+Endpoint to authenticate a user and obtain a JSON Web Token (JWT).
+
+- **URL:** `/login`
+- **Method:** `POST`
+- **Request:**
+	- Content-Type: `application/json`
+	- Body:
+		```json
+		{
+			"username": "example_user",
+			"password": "secure_password"
+		}
+		```
+
+- **Response:**
+	- Status: `200 OK`
+		```json
+		{
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+		}
+		```
+	- Status: `401 Unauthorized`
+		```json
+		{
+			"error": "Unauthorized"
+		}
+		```
+	- Status: `500 Internal Server Error`
+		```json
+		{
+			"error": "Internal Server Error"
+		}
+		```
+
+- **Description:**
+	- Validates user credentials against the stored hash in the database.
+	- Issues a JWT token with a 1-hour expiration upon successful authentication.
+	- Returns appropriate error responses for failed authentication or internal errors.
+
+### Transits
+
+Endpoint to generate transits based on user-provided parameters.
+
+- **URL:** `/transits`
+- **Method:** `GET`
+- **Authentication:** Requires a valid JWT token in the `Authorization` header.
+
+- **Query Parameters:**
+	- `year` (numeric, required): Year (0 ~ 3000)
+	- `month` (numeric, required): Month (0 ~ 11)
+	- `date` (numeric, required): Day of the month (1 ~ 31)
+	- `hour` (numeric, required): Hour of the day (0 ~ 23)
+	- `minute` (numeric, required): Minutes (0 ~ 59)
+	- `latitude` (numeric, required): Latitude (-90 ~ 90)
+	- `longitude` (numeric, required): Longitude (-180 ~ 180)
+	- `houseSystem` (string, optional, default: 'placidus'): Horoscope house system
+	- `zodiac` (string, optional, default: 'tropical'): Zodiac system
+	- `aspectPoints` (comma-separated string, optional): Which starting points will be used in aspect generation
+	- `aspectWithPoints` (comma-separated string, optional): Which ending points will be used in aspect generation
+	- `aspectTypes` (comma-separated string, optional): Types of aspects (major, minor, conjunction...) to calculate
+	- *`customOrbs` (not implemented yet): Custom orbs for aspects*
+	- `language` (string, optional, default: 'en'): Language for transits labels output
+
+**NOTE:**
+
+- `bodies`: planets
+- `points`: lunar nodes / Lilith
+- `angles`: ascendant / midheaven
+
+You can also pass in individual bodies, points, or angles into `aspectPoints` or `aspectWithPoints`. For example:
+```
+ ... aspectPoints=sun&aspectWithPoints=moon&aspectTypes=major,quincunx
+```
+
+- **Response:**
+	- Status: `200 OK`
+		```json
+		{
+			"transits": {
+				// Transits data
+			}
+		}
+		```
+	- Status: `400 Bad Request`
+		```json
+		{
+			"error": "Missing required parameters"
+		}
+		```
+	- Status: `401 Unauthorized`
+		```json
+		{
+			"error": "Unauthorized"
+		}
+		```
+	- Status: `403 Forbidden`
+		```json
+		{
+			"error": "Forbidden"
+		}
+		```
+
+- **Description:**
+	- Generates transits data based on the provided parameters.
+	- Requires authentication via a valid JWT token.
+	- Supports various options such as house system, zodiac system, and aspect configurations.
+	- Returns the generated transits data in the response.
+	- Handles errors for missing parameters, unauthorized access, and forbidden actions.
+
+## License / Special Thanks
+
+**SkyBot** is licensed under [GPLv3](LICENSE.md).
 
 This work is derived from the following:
 
