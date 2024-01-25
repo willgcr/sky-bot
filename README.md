@@ -1,5 +1,8 @@
 # SkyBot
 
+[![GitHub](https://img.shields.io/github/license/willgcr/sky-bot?style=for-the-badge)](https://github.com/willgcr/sky-bot/blob/master/LICENSE)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/willgcr/sky-bot?sort=semver&style=for-the-badge)](https://github.com/willgcr/sky-bot/releases)
+
 Hi there, welcome to **SkyBot** repository!
 
 **SkyBot** is a user-friendly and straightforward implementation designed for retrieving astronomical transits based on specific parameters for astrology applications. This project was built to provide astrological enthusiasts, developers, and businesses with accurate astrological data for their applications ***(yep, it is free and open-source!)***.
