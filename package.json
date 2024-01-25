@@ -14,7 +14,7 @@
 		"setup": "babel-node ./src/setup.js",
 		"test": "jest",
 		"dev": "babel-node ./src/app.js",
-		"prod": "node ./dist/app.js",
+		"dist": "node ./dist/app.js",
 		"build": "rm -rf ./dist && babel src -d dist",
 		"build:clear": "rm -rf ./dist"
 	},

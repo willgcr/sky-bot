@@ -30,7 +30,7 @@ loginRouter.post ('/login', (req, res) => {
 				return res.status (401).json ({ error: 'Unauthorized' });
 			}
 			// Create a JWT token
-			const token = jwt.sign ({ username }, process.env.APP_KEY, { expiresIn: '1m' });
+			const token = jwt.sign ({ username }, process.env.APP_KEY, { expiresIn: '1h' });
 			let currentTimeString = new Date ().toLocaleTimeString();
 			console.log (`Token issued to ${username} at ${currentTimeString}`);
 			res.json ({ token });

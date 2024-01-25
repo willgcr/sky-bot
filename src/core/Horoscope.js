@@ -23,7 +23,7 @@ import {
 // This class contains horoscope chart calculations
 /////////
 // * Origin origin: instance of the Origin class
-// * string houseSystem: one of the following: ['placidus', 'koch', 'whole-sign', 'equal-house', 'regiomontanus', 'topocentric'] - full list validated in self.HouseSystems
+// * string houseSystem: one of the following: ['placidus', 'koch', 'whole-sign', 'equal-house', 'regiomontanus', 'campanus', 'topocentric'] - full list validated in self.HouseSystems
 // * string zodiac: one of the following: ['sidereal', 'tropical'] - full list validated self.ZodiacSystems
 // * array aspectPoints = an array containing all or none of the strings "bodies", "points", or "angles" to determine which starting points will be used in aspect generation
 // * array aspectWithPoints = an array containing all or none of the strings "bodies", "points", or "angles" to determine ending points will be used in aspect generation
