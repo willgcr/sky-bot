@@ -6,6 +6,21 @@ Hi there, welcome to **SkyBot** repository!
 
 This work is derived from *[CircularNatalHoroscopeJS (v1.1.0)](https://github.com/0xStarcat/CircularNatalHoroscopeJS)*. I just wrapped it into an API that can be deployed on Docker containers. By this date (Jan 2024) I haven't made any relevant changes to the main algorithm but I decided not to make use of the origin library as a module to make sure **SkyBot** can incorporate updates and extension in the future without relying in the origin project.
 
+## Table of Contents
+
+1. [Introduction](#introduction)
+2. [Key Features](#key-features)
+3. [Future Work](#future-work)
+4. [How to Run SkyBot?](#how-to-run-skybot)
+   - [Using Docker](#using-docker)
+   - [Without Docker](#without-docker)
+5. [Using the API](#using-the-api)
+   - [Login Endpoint](#login-endpoint)
+   - [Transits Endpoint](#transits-endpoint)
+6. [License / Special Thanks](#license--special-thanks)
+
+Feel free to adjust the formatting or wording based on your preferences!
+
 ## Key Features
 
 **SkyBot** inherits all the features of the *CircularNatalHoroscopeJS v1.1.0*, but was built with containerization in mind, so these are the actual features:
@@ -26,29 +41,41 @@ This work is derived from *[CircularNatalHoroscopeJS (v1.1.0)](https://github.co
 
 - The current version uses an SQLite database in memory to store user credentials, in the future **SkyBot** can be extended to support multiple users, move the SQLite database to disk and store usage information for each user, making possible to set limits per user and quantify some metrics;
 
-- Add a minimal response option (to save bandwith);
+- Add the option to get a summarized response (to save bandwith);
 
 - Validate get query parameters;
 
 - Implement customOrbs query parameter.
 
-## How to run SkyBot?
+## How to Run SkyBot?
 
 ### Using Docker
 
-This project was built to run on Docker containers so everything you need to do is running the `build.sh` script. This script asks a few questions to configure the app and build the image:
+This project is designed to run in Docker containers. To configure the application and build the Docker image, use the `build.sh` script:
 
 ```bash
-./build.sh <image-name>
-# image-name is optional, if not provided the script uses a default image name
+./build.sh -u <username> -p <password> -a <app-port>
 ```
 
+**Parameters:**
+- `-u` or `--username`: Provide the username for the application.
+- `-p` or `--password`: Provide the password for the application.
+- `-a` or `--app-port`: Specify the port on which the application will run.
+
+**Example:**
+```bash
+./build.sh -u your_username -p your_password -a 3000
+```
+
+Please note that you need to replace `<username>`, `<password>` and `<app-port>`  with your actual values.
 After building, you need to deploy a container and route the ports, to make it easier you can run the `deploy.sh` script:
 
 ```bash
-./deploy.sh <container-name>
-# container-name is optional, if not provided the script uses a default image name
+./deploy.sh -p <app-port>
 ```
+
+**Parameters**
+- `-p` or `--app-port`: Specify the port on which the application will run. It routes from container to host.
 
 **NOTE:** You don't need to use the `build.sh` and `deploy.sh` scripts, they are there just to make things easier, but if you know what you're doing you can build and deploy without them.
 
@@ -65,7 +92,7 @@ npm install
 2. Configue the app:
 
 ```bash
-npm run setup <username> <password> <appPort>
+npm run setup <username> <password> <app-port>
 ```
 
 The setup script creates a `.env` file containing the encrypted password and other important app variables, like the APP_KEY (which is used to generate JSON Web Tokens). If you know what you're doing, you can edit the `.env` file manually.
@@ -150,7 +177,7 @@ Endpoint to generate transits based on user-provided parameters.
 	- `aspectPoints` (comma-separated string, optional): Which starting points will be used in aspect generation
 	- `aspectWithPoints` (comma-separated string, optional): Which ending points will be used in aspect generation
 	- `aspectTypes` (comma-separated string, optional): Types of aspects (major, minor, conjunction...) to calculate
-	- *`customOrbs` (not implemented yet): Custom orbs for aspects*
+	- ~~*`customOrbs`: Custom orbs for aspects*~~ (not implemented yet)
 	- `language` (string, optional, default: 'en'): Language for transits labels output
 
 **NOTE:**
@@ -161,7 +188,7 @@ Endpoint to generate transits based on user-provided parameters.
 
 You can also pass in individual bodies, points, or angles into `aspectPoints` or `aspectWithPoints`. For example:
 ```
- ... aspectPoints=sun&aspectWithPoints=moon&aspectTypes=major,quincunx
+GET ... aspectPoints=sun&aspectWithPoints=moon&aspectTypes=major,quincunx
 ```
 
 - **Response:**
