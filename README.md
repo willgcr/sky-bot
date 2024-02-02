@@ -21,8 +21,6 @@ This work is derived from *[CircularNatalHoroscopeJS (v1.1.0)](https://github.co
    - [Transits Endpoint](#transits)
 - [License / Special Thanks](#license--special-thanks)
 
-Feel free to adjust the formatting or wording based on your preferences!
-
 ## Key Features
 
 **SkyBot** inherits all the features of the *CircularNatalHoroscopeJS v1.1.0*, but was built with containerization in mind, so these are the actual features:
