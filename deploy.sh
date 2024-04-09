@@ -7,7 +7,7 @@ CONTAINER_NAME="sky-bot-worker"
 IMAGE_NAME="sky-bot"
 
 # The image version (get from terminal)
-IMAGE_TAG="1.0.0"
+IMAGE_TAG="1.1.0"
 
 # The port to map from the container
 APP_PORT=""
@@ -47,7 +47,7 @@ if [ "$(docker ps -aq -f status=exited -f name=${CONTAINER_NAME})" ]; then
 fi
 
 # Run the container
-docker run --pull never -d --name ${CONTAINER_NAME} \
+docker run --restart always --pull never -d --name ${CONTAINER_NAME} \
     -p 127.0.0.1:${APP_PORT}:${APP_PORT} \
     ${IMAGE_NAME}:${IMAGE_TAG} > /dev/null 2>&1
 

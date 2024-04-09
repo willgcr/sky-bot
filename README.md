@@ -7,21 +7,20 @@ Hi there, welcome to **SkyBot** repository!
 
 **SkyBot** is a user-friendly and straightforward implementation designed for retrieving astronomical transits based on specific parameters for astrology applications. This project was built to provide astrological enthusiasts, developers, and businesses with accurate astrological data for their applications ***(yep, it is free and open-source!)***.
 
-This work is derived from *[CircularNatalHoroscopeJS (v1.1.0)](https://github.com/0xStarcat/CircularNatalHoroscopeJS)*. I just wrapped it into an API that can be deployed on Docker containers. By this date (Jan 2024) I haven't made any relevant changes to the main algorithm but I decided not to make use of the origin library as a module to make sure **SkyBot** can incorporate updates and extension in the future without relying in the origin project.
+This work is derived from *[CircularNatalHoroscopeJS (v1.1.0)](https://github.com/0xStarcat/CircularNatalHoroscopeJS)*. I just wrapped it into an API that can be deployed on Docker containers. There are no relevant changes to the main algorithm but I decided not to make use of the origin library as a module so **SkyBot** can incorporate updates and extension in the future without relying in the origin project.
 
 ## Table of Contents
 
 - [Key Features](#key-features)
 - [Future Work](#future-work)
 - [How to Run SkyBot?](#how-to-run-skybot)
-   - [Using Docker](#using-docker)
-   - [Without Docker](#without-docker)
+	 - [Using Docker](#using-docker)
+	 - [Without Docker](#without-docker)
 - [Using the API](#using-the-api)
-   - [Login Endpoint](#login)
-   - [Transits Endpoint](#transits)
+	 - [Login Endpoint](#login)
+	 - [Transits Endpoint](#transits)
+	 - [Daily Sky Endpoint](#daily-sky)
 - [License / Special Thanks](#license--special-thanks)
-
-Feel free to adjust the formatting or wording based on your preferences!
 
 ## Key Features
 
@@ -43,9 +42,7 @@ Feel free to adjust the formatting or wording based on your preferences!
 
 - The current version uses an SQLite database in memory to store user credentials, in the future **SkyBot** can be extended to support multiple users, move the SQLite database to disk and store usage information for each user, making possible to set limits per user and quantify some metrics;
 
-- Add the option to get a summarized response (to save bandwith);
-
-- Validate get query parameters;
+- Validate query parameters;
 
 - Implement customOrbs query parameter.
 
@@ -69,7 +66,7 @@ This project is designed to run in Docker containers. To configure the applicati
 ./build.sh -u your_username -p your_password -a 3000
 ```
 
-Please note that you need to replace `<username>`, `<password>` and `<app-port>`  with your actual values.
+Please note that you need to replace `<username>`, `<password>` and `<app-port>`	with your actual values.
 After building, you need to deploy a container and route the ports, to make it easier you can run the `deploy.sh` script:
 
 ```bash
@@ -170,8 +167,8 @@ Endpoint to generate transits based on user-provided parameters.
 	- `year` (numeric, required): Year (0 ~ 3000)
 	- `month` (numeric, required): Month (0 ~ 11)
 	- `date` (numeric, required): Day of the month (1 ~ 31)
-	- `hour` (numeric, required): Hour of the day (0 ~ 23)
-	- `minute` (numeric, required): Minutes (0 ~ 59)
+	- `hour` (numeric, optional, default: 0): Hour of the day (0 ~ 23)
+	- `minute` (numeric, optional, default: 0): Minutes (0 ~ 59)
 	- `latitude` (numeric, required): Latitude (-90 ~ 90)
 	- `longitude` (numeric, required): Longitude (-180 ~ 180)
 	- `houseSystem` (string, optional, default: 'placidus'): Horoscope house system
@@ -226,6 +223,76 @@ GET ... aspectPoints=sun&aspectWithPoints=moon&aspectTypes=major,quincunx
 	- Requires authentication via a valid JWT token.
 	- Supports various options such as house system, zodiac system, and aspect configurations.
 	- Returns the generated transits data in the response.
+	- Handles errors for missing parameters, unauthorized access, and forbidden actions.
+
+### Daily Sky
+
+Generates a summarized version of the astrological sky for a given time and location.
+
+- **URL:** `/daily-sky`
+- **Method:** `GET`
+- **Authentication:** Requires a valid JWT token in the `Authorization` header.
+
+- **Query Parameters:**
+	- `year` (numeric, required): Year (0 ~ 3000)
+	- `month` (numeric, required): Month (0 ~ 11)
+	- `date` (numeric, required): Day of the month (1 ~ 31)
+	- `hour` (numeric, optional, default: 0): Hour of the day (0 ~ 23)
+	- `minute` (numeric, optional, default: 0): Minutes (0 ~ 59)
+	- `latitude` (numeric, required): Latitude (-90 ~ 90)
+	- `longitude` (numeric, required): Longitude (-180 ~ 180)
+	- `houseSystem` (string, optional, default: 'placidus'): Horoscope house system
+	- `zodiac` (string, optional, default: 'tropical'): Zodiac system
+	- `language` (string, optional, default: 'en'): Language for transits labels output
+	- `format` (string, optional, default: 'json'): The format to return the data (`json` or `text`)
+
+- **Response:**
+	- Status: `200 OK` (json format)
+		```json
+		{
+			"sky": [
+				{
+					"name": "Sun",
+					"sign": "Aries",
+						"position": "18° 46' 15''",
+						"retrograde": false
+			 	}
+			 	//...
+			]
+		}
+		```
+	- Status: `200 OK` (text format)
+		```text
+		Sun (18° 46' 15'') Aries
+		Moon (9° 46' 31'') Aries
+		Mercury (25° 11' 39'') Aries R
+		Venus (3° 39' 15'') Aries
+		Marte (12° 33' 13'') Pisces
+		Jupiter (18° 54' 15'') Taurus
+		...
+		```
+	- Status: `400 Bad Request`
+		```json
+		{
+			"error": "Missing required parameters"
+		}
+		```
+	- Status: `401 Unauthorized`
+		```json
+		{
+			"error": "Unauthorized"
+		}
+		```
+	- Status: `403 Forbidden`
+		```json
+		{
+			"error": "Forbidden"
+		}
+		```
+
+- **Description:**
+	- Generates transits data based on the provided parameters.
+	- Requires authentication via a valid JWT token.
 	- Handles errors for missing parameters, unauthorized access, and forbidden actions.
 
 ## License / Special Thanks
