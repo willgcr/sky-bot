@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import db from './db';
-import indexRouter from './index';
-import loginRouter from './login';
-import transitsRouter from './transits';
+import indexRouter from './routes/index';
+import loginRouter from './routes/login';
+import transitsRouter from './routes/transits';
+import dailySkyRouter from './routes/daily-sky';
 
 // Initialize environment variables
 const result = dotenv.config ();
@@ -16,11 +16,13 @@ const app = express ();
 
 const port = process.env.APP_PORT || 3000;
 const host = process.env.APP_HOST || 'localhost';
+const appName = process.env.APP_NAME || 'app_name';
 
 app.use (indexRouter);
 app.use (loginRouter);
 app.use (transitsRouter);
+app.use (dailySkyRouter);
 
 app.listen (port, host, () => {
-	console.log (`${process.env.APP_NAME} running on ${host}:${port}`);
+	console.log (`${appName} running on ${host}:${port}`);
 });

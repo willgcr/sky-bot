@@ -1,29 +1,12 @@
 import express from 'express';
-import jwt from 'jsonwebtoken';
-import db from './db';
-
-import Origin from './core/Origin';
-import Horoscope from './core/Horoscope';
+import Origin from '../core/Origin';
+import Horoscope from '../core/Horoscope';
+import authenticate from '../middlewares/authenticate';
 
 const transitsRouter = express.Router ();
 
-// Middleware to verify JWT token
-const authenticateToken = (req, res, next) => {
-	const token = req.header ('Authorization')?.split (' ')[1];
-	if (!token) {
-		return res.status (401).json ({ error: 'Unauthorized' });
-	}
-	jwt.verify (token, process.env.APP_KEY, (err, user) => {
-		if (err) {
-			return res.status (403).json ({ error: 'Forbidden' });
-		}
-		req.user = user;
-		next ();
-	});
-};
-
 const createHoroscope = (
-	year, month, date, hour, minute, latitude, longitude, houseSystem = 'placidus', zodiac = 'tropical',
+	year, month, date, hour = 0, minute = 0, latitude, longitude, houseSystem = 'placidus', zodiac = 'tropical',
 	aspectPoints = ['bodies', 'points', 'angles'], aspectWithPoints = ['bodies', 'points', 'angles'], 
 	aspectTypes = ["major", "minor"], customOrbs = {}, language = 'en') => {
 	try {
@@ -54,7 +37,7 @@ const createHoroscope = (
 }
 
 // Authorized route
-transitsRouter.get ('/transits', authenticateToken, (req, res) => {
+transitsRouter.get ('/transits', authenticate, (req, res) => {
 	let {
 		year, month, date, hour, minute, latitude, longitude,
 		houseSystem, zodiac, aspectPoints, aspectWithPoints,
@@ -62,7 +45,7 @@ transitsRouter.get ('/transits', authenticateToken, (req, res) => {
 	} = req.query;
 
 	// Check if required parameters are present
-	if (!(year && month && date && hour && minute && latitude && longitude)) {
+	if (!(year && month && date && latitude && longitude)) {
 		return res.status (400).json ({ error: 'Missing required parameters' });
 	}
 
@@ -77,7 +60,7 @@ transitsRouter.get ('/transits', authenticateToken, (req, res) => {
 	// Generate and return the map
 	res.send (JSON.stringify (createHoroscope (
 		parseInt (year), parseInt (month), parseInt (date),
-		parseInt (hour), parseInt (minute), parseFloat (latitude), parseFloat (longitude),
+		parseInt (hour??0), parseInt (minute??0), parseFloat (latitude), parseFloat (longitude),
 		houseSystem, zodiac, aspectPoints, aspectWithPoints, aspectTypes, customOrbs, language
 	)));
 });
