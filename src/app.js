@@ -4,6 +4,7 @@ import indexRouter from './routes/index';
 import loginRouter from './routes/login';
 import transitsRouter from './routes/transits';
 import dailySkyRouter from './routes/daily-sky';
+import ephemerisRouter from './routes/ephemeris';
 
 // Initialize environment variables
 const result = dotenv.config ();
@@ -22,6 +23,7 @@ app.use (indexRouter);
 app.use (loginRouter);
 app.use (transitsRouter);
 app.use (dailySkyRouter);
+app.use (ephemerisRouter);
 
 app.listen (port, host, () => {
 	console.log (`${appName} running on ${host}:${port}`);

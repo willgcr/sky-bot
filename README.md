@@ -5,7 +5,9 @@
 
 Hi there, welcome to **SkyBot** repository!
 
-**SkyBot** is a user-friendly and straightforward implementation designed for retrieving astronomical transits based on specific parameters for astrology applications. This project was built to provide astrological enthusiasts, developers, and businesses with accurate astrological data for their applications ***(yep, it is free and open-source!)***.
+**SkyBot** is a user-friendly and straightforward implementation designed for retrieving astronomical transits based on specific parameters for astrology applications. This project was built to provide astrology enthusiasts, developers, and businesses with accurate astrological data for their applications ***(yep, it is free and open-source!)***.
+
+Also, this API might be used for scientific purposes too, since the astronomical data it provides comes from [Moshier's Ephemeris algorithms](http://www.moshier.net/).
 
 This work is derived from *[CircularNatalHoroscopeJS (v1.1.0)](https://github.com/0xStarcat/CircularNatalHoroscopeJS)*. I just wrapped it into an API that can be deployed on Docker containers. There are no relevant changes to the main algorithm but I decided not to make use of the origin library as a module so **SkyBot** can incorporate updates and extension in the future without relying in the origin project.
 
@@ -20,6 +22,7 @@ This work is derived from *[CircularNatalHoroscopeJS (v1.1.0)](https://github.co
 	 - [Login Endpoint](#login)
 	 - [Transits Endpoint](#transits)
 	 - [Daily Sky Endpoint](#daily-sky)
+	 - [Ephemeris Endpoint](#ephemeris)
 - [License / Special Thanks](#license--special-thanks)
 
 ## Key Features
@@ -191,32 +194,11 @@ GET ... aspectPoints=sun&aspectWithPoints=moon&aspectTypes=major,quincunx
 ```
 
 - **Response:**
-	- Status: `200 OK`
-		```json
-		{
-			"transits": {
-				// Transits data
-			}
-		}
-		```
-	- Status: `400 Bad Request`
-		```json
-		{
-			"error": "Missing required parameters"
-		}
-		```
-	- Status: `401 Unauthorized`
-		```json
-		{
-			"error": "Unauthorized"
-		}
-		```
-	- Status: `403 Forbidden`
-		```json
-		{
-			"error": "Forbidden"
-		}
-		```
+	- Status: 
+		- `200 OK` (application/json)
+		- `400 Bad Request` (application/json)
+		- `401 Unauthorized` (application/json)
+		- `403 Forbidden` (application/json)
 
 - **Description:**
 	- Generates transits data based on the provided parameters.
@@ -247,51 +229,44 @@ Generates a summarized version of the astrological sky for a given time and loca
 	- `format` (string, optional, default: 'json'): The format to return the data (`json` or `text`)
 
 - **Response:**
-	- Status: `200 OK` (json format)
-		```json
-		{
-			"sky": [
-				{
-					"name": "Sun",
-					"sign": "Aries",
-						"position": "18° 46' 15''",
-						"retrograde": false
-			 	}
-			 	//...
-			]
-		}
-		```
-	- Status: `200 OK` (text format)
-		```text
-		Sun (18° 46' 15'') Aries
-		Moon (9° 46' 31'') Aries
-		Mercury (25° 11' 39'') Aries R
-		Venus (3° 39' 15'') Aries
-		Marte (12° 33' 13'') Pisces
-		Jupiter (18° 54' 15'') Taurus
-		...
-		```
-	- Status: `400 Bad Request`
-		```json
-		{
-			"error": "Missing required parameters"
-		}
-		```
-	- Status: `401 Unauthorized`
-		```json
-		{
-			"error": "Unauthorized"
-		}
-		```
-	- Status: `403 Forbidden`
-		```json
-		{
-			"error": "Forbidden"
-		}
-		```
+	- Status: 
+		- `200 OK` (application/json | text/plain)
+		- `400 Bad Request` (application/json)
+		- `401 Unauthorized` (application/json)
+		- `403 Forbidden` (application/json)
 
 - **Description:**
 	- Generates transits data based on the provided parameters.
+	- Requires authentication via a valid JWT token.
+	- Handles errors for missing parameters, unauthorized access, and forbidden actions.
+
+### Ephemeris
+
+Returns only ephemeris data. Useful for astronomical and scientific applications.
+
+- **URL:** `/ephemeris`
+- **Method:** `GET`
+- **Authentication:** Requires a valid JWT token in the `Authorization` header.
+
+- **Query Parameters:**
+	- `year` (numeric, required): Year (0 ~ 3000)
+	- `month` (numeric, required): Month (0 ~ 11)
+	- `date` (numeric, required): Day of the month (1 ~ 31)
+	- `hour` (numeric, optional, default: 0): Hour of the day (0 ~ 23)
+	- `minute` (numeric, optional, default: 0): Minutes (0 ~ 59)
+	- `second` (numeric, optional, default: 0) Seconds (0 ~ 59)
+	- `latitude` (numeric, required): Latitude (-90 ~ 90)
+	- `longitude` (numeric, required): Longitude (-180 ~ 180)
+
+- **Response:**
+	- Status: 
+		- `200 OK` (application/json)
+		- `400 Bad Request` (application/json)
+		- `401 Unauthorized` (application/json)
+		- `403 Forbidden` (application/json)
+
+- **Description:**
+	- Returns only the raw ephemeris data, useful for scientific purposes.
 	- Requires authentication via a valid JWT token.
 	- Handles errors for missing parameters, unauthorized access, and forbidden actions.
 
