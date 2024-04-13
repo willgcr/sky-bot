@@ -4,11 +4,19 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.2.0 (2024-04-12)
+	
+### Added
+- Add a new route (`ephemeris`), which returns raw ephemeris data. Useful for astronomical and scientific applications.
+
+### Changed
+- Fixed response headers for `daily-sky` and `transits` routes.
+
 ## v1.1.0 (2024-04-09)
 	
 ### Added
 - Add this changelog.
-- Add a new route (`/daily-sky`), which returns a summarized version of the astrological sky in a given time and location.
+- Add a new route (`daily-sky`), which returns a summarized version of the astrological sky in a given time and location.
 
 ### Changed
 - Update `src` folder structure

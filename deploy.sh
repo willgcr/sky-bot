@@ -6,8 +6,8 @@ CONTAINER_NAME="sky-bot-worker"
 # Set the image name
 IMAGE_NAME="sky-bot"
 
-# The image version (get from terminal)
-IMAGE_TAG="1.1.0"
+# The image version
+IMAGE_TAG="1.2.0"
 
 # The port to map from the container
 APP_PORT=""
