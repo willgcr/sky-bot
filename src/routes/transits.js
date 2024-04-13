@@ -58,11 +58,11 @@ transitsRouter.get ('/transits', authenticate, (req, res) => {
 	customOrbs = {};
 
 	// Generate and return the map
-	res.send (JSON.stringify (createHoroscope (
+	res.status (200).json (createHoroscope (
 		parseInt (year), parseInt (month), parseInt (date),
 		parseInt (hour??0), parseInt (minute??0), parseFloat (latitude), parseFloat (longitude),
 		houseSystem, zodiac, aspectPoints, aspectWithPoints, aspectTypes, customOrbs, language
-	)));
+	));
 });
 
 

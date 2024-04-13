@@ -68,11 +68,16 @@ dailySkyRouter.get ('/daily-sky', authenticate, (req, res) => {
 	}
 
 	// Generate and return the sky data
-	res.send (JSON.stringify (dailySky (
+	let result = dailySky (
 		parseInt (year), parseInt (month), parseInt (date),
 		parseInt (hour??0), parseInt (minute??0), parseFloat (latitude), parseFloat (longitude),
 		houseSystem, zodiac, language, format
-	)));
+	);
+	if (format == 'text') { 
+		res.status (200).type ('text/plain').send (result);
+	} else {
+		res.status (200).json (result);
+	}
 });
 
 
