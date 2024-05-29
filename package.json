@@ -1,6 +1,6 @@
 {
 	"name": "sky-bot",
-	"version": "1.1.0",
+	"version": "1.2.1",
 	"author": "https://willgcr.me",
 	"license": "GPLv3",
 	"description": "A simple API implementation to get astrological transits at a given time and location.",
@@ -14,7 +14,7 @@
 		"setup": "babel-node ./src/setup.js",
 		"test": "jest",
 		"dev": "babel-node ./src/app.js",
-		"dist": "node ./dist/app.js",
+		"dist": "NODE_ENV=production node ./dist/app.js",
 		"build": "rm -rf ./dist && babel src -d dist",
 		"build:clear": "rm -rf ./dist"
 	},
