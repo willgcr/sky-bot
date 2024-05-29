@@ -49,6 +49,8 @@ This work is derived from *[CircularNatalHoroscopeJS (v1.1.0)](https://github.co
 
 - Implement customOrbs query parameter.
 
+- Implement JWT authentication using RSA-signed tokens.
+
 ## How to Run SkyBot?
 
 ### Using Docker

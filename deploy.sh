@@ -7,7 +7,7 @@ CONTAINER_NAME="sky-bot-worker"
 IMAGE_NAME="sky-bot"
 
 # The image version
-IMAGE_TAG="1.2.0"
+IMAGE_TAG="1.2.1"
 
 # The port to map from the container
 APP_PORT=""
