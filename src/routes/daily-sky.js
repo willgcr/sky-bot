@@ -41,7 +41,11 @@ const dailySky = (
 
 		// Get only a summarized version of the data
 		let sky = [];
-		const astros = transits._celestialBodies.all.concat (transits._celestialPoints.all);
+		const astros = transits._celestialBodies.all
+							   .concat (transits._celestialPoints.all)
+							   .concat(transits._ascendant)
+							   .concat(transits._midheaven);
+
 		astros.forEach ((astro) => {
 			sky = [...sky, {
 				'name': astro.label,
@@ -50,6 +54,17 @@ const dailySky = (
 				'retrograde': astro.isRetrograde || false
 			}];
 		});
+
+		const houses = transits._houses.slice (0, 12);
+		houses.forEach ((house) => {
+			sky = [...sky, {
+				'house': house.label,
+				'sign': house.Sign.label,
+				'start_position': house.ChartPosition.EndPosition.Ecliptic.ArcDegreesFormatted30,
+				'end_position': house.ChartPosition.StartPosition.Ecliptic.ArcDegreesFormatted30
+			}];
+		});
+
 		return (format == 'text' ? skyToText (sky) : {sky});
 	} catch (e) {
 		console.error ('Error:', e.message);

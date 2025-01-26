@@ -4,7 +4,7 @@
 IMAGE_NAME="sky-bot"
 
 # Initialize the image tag variable
-IMAGE_TAG="1.2.1"
+IMAGE_TAG="1.3.0"
 
 # Initialize username, password, and app port variables
 USERNAME=""
