@@ -12,6 +12,12 @@ COPY package*.json ./
 COPY babel.config.js ./
 COPY .env.example ./
 
+# Install Python, build dependencies, and Python dev tools
+RUN apk add --no-cache python3 make g++ python3-dev py3-setuptools
+
+# Set Python for node-gyp
+ENV PYTHON=/usr/bin/python3
+
 # Install app dependencies
 RUN npm install
 
